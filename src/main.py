@@ -1,6 +1,5 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
-
+from src.library import Library
+from src.random_generation import random_book
 
 def main() -> None:
     """
@@ -8,13 +7,18 @@ def main() -> None:
     :return: Данная функция ничего не возвращает
     """
 
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
+    library = Library()
 
-    result = power_function(target=target, power=degree)
+    for _ in range(10):
+        book = random_book()
+        library.add_book(book)
+    library.add_book(book)
 
-    print(result)
-
-    print(SAMPLE_CONSTANT)
+    print(library.book_collection)
+    print()
+    print(library.author_index)
+    print()
+    print(library.isbn_index)
 
 if __name__ == "__main__":
     main()
