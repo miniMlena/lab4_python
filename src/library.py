@@ -24,6 +24,7 @@ class Library:
             self.isbn_index.add(book)
             self.author_index.add(book)
             self.year_index.add(book)
+            self.genre_index.add(book)
 
         self.book_collection.add(book)
 
@@ -38,8 +39,9 @@ class Library:
             self.isbn_index.remove(book)
             self.author_index.remove(book)
             self.year_index.remove(book)
+            self.genre_index.remove(book)
 
-    def find_by_author(self, author: str):
+    def find_by_author(self, author: str) -> BookCollection:
         return self.author_index[author]
         '''if res:
             output = [book.__str__() + '\n' for book in res]
@@ -47,8 +49,11 @@ class Library:
         else:
             return '''
         
-    def find_by_genre(self, genre: str):
+    def find_by_genre(self, genre: str) -> BookCollection:
         return self.genre_index[genre]
     
-    def find_by_year(self, year: int):
+    def find_by_year(self, year: int) -> BookCollection:
         return self.year_index[year]
+    
+    def find_by_isbn(self, isbn: str) -> BookCollection:
+        return self.isbn_index[isbn]

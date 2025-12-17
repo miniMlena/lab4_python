@@ -6,7 +6,7 @@ from src.book_collection import BookCollection
 class IndexDict(UserDict):
 
     def __init__(self):
-        self.data = defaultdict(BookCollection())
+        self.data = defaultdict(BookCollection)
 
     def __iter__(self):
         return iter(self.data)
@@ -58,7 +58,7 @@ class AuthorIndexDict(IndexDict):
         Добавление книги в индекс
         :param book: Добавляемая книга
         """
-        if book.author not in self.data:
+        if book.author not in self.data: #Он почему-то добавляет одинаковые книги!!! Хотя вроде нет, но надо проверить
             self.data[book.author] = BookCollection()
         if book not in self.data[book.author]:
             self.data[book.author].add(book)

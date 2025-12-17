@@ -6,13 +6,12 @@ class BookCollection():
     """
     
     """
-    def __init__(self, books = None):
+    def __init__(self, *books):
         self.books_counter: Dict[Book, int] = defaultdict(int)
         self.books_list: List[Book] = []
-        
-        if books:
-            for book in books:
-                self.add(book)
+
+        for book in books:
+            self.add(book)
     
     def __getitem__(self, key: Union[int, slice]) -> Union[Book, 'BookCollection']:
         if isinstance(key, slice):
