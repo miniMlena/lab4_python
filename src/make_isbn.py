@@ -1,6 +1,6 @@
 from src.constants import GENRES
 
-def calculate_isbn(title, author, year, genre):
+def calculate_isbn(title, author, year, genre) -> str:
     """
     Генерация уникального ISBN исходя из параметров книги
     :param title: Название книги
@@ -15,11 +15,3 @@ def calculate_isbn(title, author, year, genre):
 
     isbn = f'978-{year_code}-{author_code:05d}-{title_code:03d}-{genre_code}'
     return isbn
-
-'''import random
-title = random.choice(TITLES)
-author = random.choice(AUTHORS)
-year = random.choice(YEARS)
-genre = random.choice(GENRES)
-
-print(calculate_isbn(title, author, year, genre))'''

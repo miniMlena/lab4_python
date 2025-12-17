@@ -1,6 +1,6 @@
 import re
 from src.constants import INPUT_RE
-from src.random_generation import run_simulation
+from src.random_simulation import run_simulation
 
 def main() -> None:
     """
@@ -9,7 +9,7 @@ def main() -> None:
     """
 
     print('Добро пожаловать в случайную симуляцию работы с библиотекой!')
-    print('Введите количество шагов и seed для симуляции в таком формате:')
+    print('Введите количество шагов и seed для симуляции в таком формате (и именно в таком порядке):')
     print('steps=steps_number seed=seed_number')
     print('Оба аргумента необязательны. Вы можете ввести оба аргумента, только число шагов, только seed или не вводить ничего! Число шагов по умолчанию равно 20. Для выхода введите exit или выход.')
 

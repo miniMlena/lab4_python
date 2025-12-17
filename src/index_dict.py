@@ -1,5 +1,4 @@
 from collections import UserDict, defaultdict
-from typing import Any, List
 from src.book_class import Book
 from src.book_collection import BookCollection
 
@@ -17,20 +16,11 @@ class IndexDict(UserDict):
     def __len__(self) -> int:
         return len(self.data)
     
-    def __str__(self): #!!!!!!
+    def __str__(self):
         output = []
         for key in self:
             output.append(str(key) + ': ' + str(self[key]))
         return '\n'.join(output)
-
-'''    def contains(self, key: Any) -> bool:
-        """Проверить наличие ключа в индексе"""
-        return key in self.data
-    
-    def get_all_keys(self) -> List[Any]:
-        """Получить все ключи индекса"""
-        return list(self.data.keys())
-    '''
 
 class ISBNIndexDict(IndexDict):
     
@@ -58,7 +48,7 @@ class AuthorIndexDict(IndexDict):
         Добавление книги в индекс
         :param book: Добавляемая книга
         """
-        if book.author not in self.data: #Он почему-то добавляет одинаковые книги!!! Хотя вроде нет, но надо проверить
+        if book.author not in self.data:
             self.data[book.author] = BookCollection()
         if book not in self.data[book.author]:
             self.data[book.author].add(book)
@@ -68,10 +58,10 @@ class AuthorIndexDict(IndexDict):
         Удаление книги из индекса
         :param book: Удаляемая книга
         """
-        if book.author in self.data and book in self.data[book.author]:
-            self.data[book.author].remove(book)
-            if not self.data[book.author]:
-                del self.data[book.author]
+        #if book.author in self.data and book in self.data[book.author]:
+        self.data[book.author].remove(book)
+        if not self.data[book.author]:
+            del self.data[book.author]
 
 '''    def find(self, author):
         if author in self.data:

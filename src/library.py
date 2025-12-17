@@ -12,6 +12,12 @@ class Library:
         self.year_index = YearIndexDict()
         self.genre_index = GenreIndexDict()
 
+    def __len__(self):
+        return self.book_collection.__len__()
+    
+    def __iter__(self):
+        return self.book_collection.__iter__()
+
     def __str__(self):
         return self.book_collection.__str__()
 

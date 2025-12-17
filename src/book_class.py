@@ -1,6 +1,9 @@
 from src.make_isbn import calculate_isbn
 
 class Book:
+    '''
+    Docstring for Book
+    '''
     def __init__(self, title, author, year, genre):
         self.title = title
         self.author = author
@@ -8,7 +11,7 @@ class Book:
         self.genre = genre
         self.isbn = calculate_isbn(title, author, year, genre)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'({self.title}, {self.author}, {self.year}, {self.genre}, {self.isbn})'
 
     def __str__(self) -> str:
