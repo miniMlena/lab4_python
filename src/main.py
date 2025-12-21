@@ -5,6 +5,7 @@ from src.random_simulation import run_simulation
 def main() -> None:
     """
     Точка входа в приложение
+    
     :return: Данная функция ничего не возвращает
     """
 

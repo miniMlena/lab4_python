@@ -36,15 +36,30 @@ def delete_book(lib: Library):
     lib.remove_book(book_for_del)
     print(f'Удалена книга: {book_for_del}')
 
+def get_book_by_isbn(lib: Library) -> None:
+    '''
+    Поиск книги по случайному ISBN
+    :param lib: Рассматриваемая библиотека
+    :return: Данная функция ничего не возвращает
+    '''
+    getting_isbn = random.choice(lib.book_collection).isbn
+    print(f'Кто-то хочет взять книгу с таким ISBN: {getting_isbn}...')
+
+    suitable_book = lib.find_by_isbn(getting_isbn)
+    if suitable_book:
+        lib.remove_book(suitable_book[0])
+        print('Кто-то получил свою книгу!')
+    else:
+        print('Такой книги нет в библиотеке')
+
 book1 = random_book()
 book2 = random_book()
 book3 = random_book()
 
 lib = Library()
-
-for i in range(5):
-    if not lib:
-        print('empty')
-        add_book(lib)
-    else:
-        print('not empty')
+lib.add_book(book1)
+lib.add_book(book2)
+lib.add_book(book3)
+print(lib)
+get_book_by_isbn(lib)
+print(lib)

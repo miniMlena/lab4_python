@@ -9,6 +9,7 @@ from src.random_books import random_book, random_book_short
 def add_book(lib: Library) -> None:
     '''
     Добавление случайной книги
+
     :param lib: Библиотека, в которую добавится книга
     :return: Данная функция ничего не возвращает
     '''
@@ -19,6 +20,7 @@ def add_book(lib: Library) -> None:
 def delete_book(lib: Library) -> None:
     '''
     Удаление случайной книги
+
     :param lib: Библиотека, из которой удалится книга
     :return: Данная функция ничего не возвращает
     '''
@@ -29,6 +31,7 @@ def delete_book(lib: Library) -> None:
 def search_by_author(lib: Library) -> None:
     '''
     Поиск книг случайного автора
+
     :param lib: Библиотека, в которой ищутся книги
     :return: Данная функция ничего не возвращает
     '''
@@ -40,6 +43,7 @@ def search_by_author(lib: Library) -> None:
 def search_by_genre(lib: Library) -> None:
     '''
     Поиск книг случайного жанра
+
     :param lib: Библиотека, в которой ищутся книги
     :return: Данная функция ничего не возвращает
     '''
@@ -51,6 +55,7 @@ def search_by_genre(lib: Library) -> None:
 def search_by_year(lib: Library) -> None:
     '''
     Поиск книг случайного года выпуска
+
     :param lib: Библиотека, в которой ищутся книги
     :return: Данная функция ничего не возвращает
     '''
@@ -62,6 +67,7 @@ def search_by_year(lib: Library) -> None:
 def update_author_index(lib: Library) -> None:
     '''
     Изменение автора случайной книги
+
     :param lib: Рассматриваемая библиотека
     :return: Данная функция ничего не возвращает
     '''
@@ -80,6 +86,7 @@ def update_author_index(lib: Library) -> None:
 def update_year_index(lib: Library) -> None:
     '''
     Изменение года выпуска случайной книги
+
     :param lib: Рассматриваемая библиотека
     :return: Данная функция ничего не возвращает
     '''
@@ -97,6 +104,7 @@ def update_year_index(lib: Library) -> None:
 def get_book_by_combo(lib: Library) -> None:
     '''
     Поиск книги по случайному сочетанию автора и названия
+
     :param lib: Рассматриваемая библиотека
     :return: Данная функция ничего не возвращает
     '''
@@ -105,7 +113,7 @@ def get_book_by_combo(lib: Library) -> None:
     getting_author = getting_book[1]
     print(f'Кто-то хочет взять такую книгу: {getting_author} - "{getting_title}"...')
 
-    authors_books = lib.find_by_author(getting_author)
+    authors_books = lib.find_by_author(getting_author) # там все книги уникальные!
     suitable_books = BookCollection()
     for b in authors_books:
         if b.title == getting_title:
@@ -121,6 +129,7 @@ def get_book_by_combo(lib: Library) -> None:
 def get_book_by_isbn(lib: Library) -> None:
     '''
     Поиск книги по случайному ISBN
+
     :param lib: Рассматриваемая библиотека
     :return: Данная функция ничего не возвращает
     '''
@@ -137,12 +146,15 @@ def get_book_by_isbn(lib: Library) -> None:
 events = (add_book, delete_book, search_by_author, search_by_genre, search_by_year, update_author_index, update_year_index, get_book_by_combo, get_book_by_isbn)
 
 def run_simulation(steps: int = 20, seed: int | None = None) -> None:
-    '''
+    """
     Случайная симуляция работы с библиотекой
+
     :param steps: Количество шагов симуляции
+    :type steps: int
     :param seed: seed для случайной генерации
+    :type seed: int | None
     :return: Данная функция ничего не возвращает
-    '''
+    """
     if seed:
         random.seed(seed)
     
