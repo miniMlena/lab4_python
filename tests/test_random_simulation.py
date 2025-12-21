@@ -2,7 +2,7 @@ import pytest
 import builtins
 import random
 from unittest.mock import patch, MagicMock
-#from src.constants import TITLES, AUTHORS, YEARS, GENRES
+from src.constants import TITLES, AUTHORS, YEARS, GENRES
 from src.random_books import random_book, random_book_short
 from src.random_simulation import (
     add_book, delete_book, search_by_author, search_by_genre,
@@ -12,47 +12,36 @@ from src.random_simulation import (
 from src.book_class import Book
 from src.library import Library
 
-class MockConstants:
-    TITLES = ["Война и мир", "1984", "Преступление и наказание", "Мастер и Маргарита"]
-    AUTHORS = ["Лев Толстой", "Джордж Оруэлл", "Фёдор Достоевский", "Михаил Булгаков"]
-    YEARS = [1869, 1949, 1866, 1967]
-    GENRES = ["Роман", "Фантастика", "Детектив", "Поэзия"]
-
 # тесты генерации книг
+
 def test_random_book_generation():
     """Тест генерации случайной книги с валидными параметрами"""
-    with patch('src.random_books.TITLES', MockConstants.TITLES), \
-         patch('src.random_books.AUTHORS', MockConstants.AUTHORS), \
-         patch('src.random_books.YEARS', MockConstants.YEARS), \
-         patch('src.random_books.GENRES', MockConstants.GENRES):
-        random.seed(42)
-        book = random_book()
-        assert isinstance(book, Book)
-        assert book.title in MockConstants.TITLES
-        assert book.author in MockConstants.AUTHORS
-        assert book.year in MockConstants.YEARS
-        assert book.genre in MockConstants.GENRES
+    random.seed(42)
+    book = random_book()
+    assert isinstance(book, Book)
+    assert book.title in TITLES
+    assert book.author in AUTHORS
+    assert book.year in YEARS
+    assert book.genre in GENRES
 
 def test_random_book_short():
     """Тест генерации случайной пары (название, автор)"""
-    with patch('src.random_books.TITLES', MockConstants.TITLES), \
-         patch('src.random_books.AUTHORS', MockConstants.AUTHORS):
-        random.seed(42)
-        title, author = random_book_short()
-        assert title in MockConstants.TITLES
-        assert author in MockConstants.AUTHORS
-        assert isinstance(title, str)
-        assert isinstance(author, str)
+    random.seed(42)
+    title, author = random_book_short()
+    assert title in TITLES
+    assert author in AUTHORS
+    assert isinstance(title, str)
+    assert isinstance(author, str)
 
+# тесты для функций симуляции
 
-# ========== Тесты для функций симуляции ==========
 def test_add_book_function():
     """Тест функции добавления случайной книги в библиотеку"""
     library = Library()
     initial_len = len(library)
     
     with patch('src.random_simulation.random_book') as mock_random_book:
-        mock_book = Book("Тестовая книга", "Тестовый автор", 2023, "Тестовый жанр")
+        mock_book = Book("Тестовая книга", "Тестовый автор", 2025, "Тестовый жанр")
         mock_random_book.return_value = mock_book
         
         add_book(library)
@@ -63,8 +52,8 @@ def test_add_book_function():
 def test_delete_book_function():
     """Тест функции удаления случайной книги из библиотеки"""
     library = Library()
-    book1 = Book("Книга 1", "Автор 1", 2000, "Жанр 1")
-    book2 = Book("Книга 2", "Автор 2", 2001, "Жанр 2")
+    book1 = Book("Книга 1", "Автор 1", 2000, "жанр 1")
+    book2 = Book("Книга 2", "Автор 2", 2001, "жанр 2")
     library.add_book(book1)
     library.add_book(book2)
     initial_len = len(library)
@@ -91,13 +80,12 @@ def test_delete_book_empty_library():
 def test_search_by_author_function():
     """Тест поиска по случайному автору"""
     library = Library()
-    book1 = Book("Книга 1", "Толстой", 2000, "Роман")
-    book2 = Book("Книга 2", "Достоевский", 2001, "Роман")
+    book1 = Book("Книга 1", "Толстой", 2000, "роман")
+    book2 = Book("Книга 2", "Достоевский", 2001, "роман")
     library.add_book(book1)
     library.add_book(book2)
     
-    with patch('src.random_simulation.random.choice') as mock_choice, \
-         patch('src.random_simulation.AUTHORS', MockConstants.AUTHORS):
+    with patch('src.random_simulation.random.choice') as mock_choice:
         mock_choice.return_value = "Толстой"
 
         with patch('builtins.print'):
@@ -106,33 +94,27 @@ def test_search_by_author_function():
 def test_search_by_genre_function():
     """Тест поиска по случайному жанру"""
     library = Library()
-    book = Book("Книга", "Автор", 2000, "Фантастика")
+    book = Book("Книга", "Автор", 2000, "роман")
     library.add_book(book)
-    
-    with patch('src.random_simulation.random.choice') as mock_choice, \
-         patch('src.random_simulation.GENRES', MockConstants.GENRES):
-        mock_choice.return_value = "Фантастика"
-        
+    with patch('src.random_simulation.random.choice') as mock_choice:
+        mock_choice.return_value = "роман"
         with patch('builtins.print'):
             search_by_genre(library)
 
 def test_search_by_year_function():
     """Тест поиска по случайному году"""
     library = Library()
-    book = Book("Книга", "Автор", 2020, "Жанр")
+    book = Book("Книга", "Автор", 2025, "жанр")
     library.add_book(book)
-    
-    with patch('src.random_simulation.random.choice') as mock_choice, \
-         patch('src.random_simulation.YEARS', MockConstants.YEARS):
-        mock_choice.return_value = 2020
-        
+    with patch('src.random_simulation.random.choice') as mock_choice:
+        mock_choice.return_value = 2025
         with patch('builtins.print'):
             search_by_year(library)
 
 def test_update_author_index_function():
     """Тест обновления автора у случайной книги"""
     library = Library()
-    book = Book("Война и мир", "Лев Толстой", 1869, "Роман")
+    book = Book("Война и мир", "Лев Толстой", 1869, "роман")
     library.add_book(book)
     
     with patch('src.random_simulation.random.choice') as mock_choice, \
@@ -169,7 +151,7 @@ def test_update_year_index_function():
 def test_get_book_by_combo_found():
     """Тест получения книги по сочетанию автор-название (книга найдена)"""
     library = Library()
-    book = Book("Война и мир", "Лев Толстой", 1869, "Роман")
+    book = Book("Война и мир", "Лев Толстой", 1869, "роман")
     library.add_book(book)
     initial_len = len(library)
     
@@ -184,7 +166,7 @@ def test_get_book_by_combo_found():
 def test_get_book_by_combo_not_found():
     """Тест получения книги по сочетанию автор-название (книга не найдена)"""
     library = Library()
-    book = Book("Война и мир", "Лев Толстой", 1869, "Роман")
+    book = Book("Война и мир", "Лев Толстой", 1869, "роман")
     library.add_book(book)
     initial_len = len(library)
     
@@ -199,7 +181,7 @@ def test_get_book_by_combo_not_found():
 def test_get_book_by_isbn_found():
     """Тест получения книги по ISBN (книга найдена)"""
     library = Library()
-    book = Book("Война и мир", "Лев Толстой", 1869, "Роман")
+    book = Book("Война и мир", "Лев Толстой", 1869, "роман")
     library.add_book(book)
     initial_len = len(library)
     
@@ -214,7 +196,7 @@ def test_get_book_by_isbn_found():
 def test_get_book_by_isbn_not_found():
     """Тест получения книги по ISBN (книга не найдена)"""
     library = Library()
-    book = Book("Война и мир", "Лев Толстой", 1869, "Роман")
+    book = Book("Война и мир", "Лев Толстой", 1869, "роман")
     library.add_book(book)
     initial_len = len(library)
     
@@ -228,6 +210,7 @@ def test_get_book_by_isbn_not_found():
         assert len(library) == initial_len  # книга не должна быть удалена
 
 # тесты для run_simulation
+
 def test_run_simulation_with_seed():
     """Тест запуска симуляции с seed"""
     with patch('src.random_simulation.time.sleep'):
@@ -279,7 +262,7 @@ def test_run_simulation_exception_handling():
             with patch('src.random_simulation.random_book') as mock_random_book:
                 mock_books = []
                 for i in range(10):
-                    book = Book(f"Книга {i}", f"Автор {i}", 2000 + i, "Роман")
+                    book = Book(f"Книга {i}", f"Автор {i}", 2000 + i, "роман")
                     mock_books.append(book)
 
                 mock_random_book.side_effect = mock_books + [Exception("Тестовое исключение")]
