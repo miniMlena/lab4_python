@@ -56,10 +56,6 @@ book1 = random_book()
 book2 = random_book()
 book3 = random_book()
 
-lib = Library()
-lib.add_book(book1)
-lib.add_book(book2)
-lib.add_book(book3)
-print(lib)
-get_book_by_isbn(lib)
-print(lib)
+for i in range(20):
+    book = random_book()
+    print(book)

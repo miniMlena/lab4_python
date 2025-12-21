@@ -49,11 +49,10 @@ class Book:
         :param year: Год выпуска книги
         :param genre: Жанр книги
         """
-        from src.constants import GENRES
         year_code = year % 10
         author_code = (ord(author[0]) * ord(author[1]) * ord(author[2])) % 100_000
         title_code = (ord(title[0]) * ord(title[1])) % 1000
-        genre_code = GENRES.index(genre)
+        genre_code = (len(genre) * ord(genre[-1]) + ord(genre[0])) % 10
 
         isbn = f'978-{year_code}-{author_code:05d}-{title_code:03d}-{genre_code}'
         return isbn

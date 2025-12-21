@@ -30,7 +30,7 @@ class BookCollection():
         :rtype: Book | BookCollection
         """
         if isinstance(key, slice):
-            return BookCollection(self.books_list[key])
+            return BookCollection(*self.books_list[key])
         return self.books_list[key]
     
     def __iter__(self) -> Iterator:
