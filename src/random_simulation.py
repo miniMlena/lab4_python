@@ -155,7 +155,7 @@ def run_simulation(steps: int = 20, seed: int | None = None) -> None:
     :type seed: int | None
     :return: Данная функция ничего не возвращает
     """
-    if seed:
+    if seed is not None:
         random.seed(seed)
     
     library = Library()
