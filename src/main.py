@@ -1,11 +1,10 @@
-import re
-from src.constants import INPUT_RE
+from src.parse_params import parse_simulation_parameters
 from src.random_simulation import run_simulation
 
 def main() -> None:
     """
     Точка входа в приложение
-    
+
     :return: Данная функция ничего не возвращает
     """
 
@@ -14,25 +13,14 @@ def main() -> None:
     print('steps=steps_number seed=seed_number')
     print('Оба аргумента необязательны. Вы можете ввести оба аргумента, только число шагов, только seed или не вводить ничего! Число шагов по умолчанию равно 20. Для выхода введите exit или выход.')
 
-    while ((user_input := input('Введите параметры или exit для выхода: ')) not in ('exit', 'выход')):
+    while ((user_input := input('Введите параметры или exit для выхода: ').strip()) not in ('exit', 'выход')):
 
-        users_steps, users_seed = None, None
+        try:
+            users_steps, users_seed = parse_simulation_parameters(user_input)
+        except Exception as e:
+            print(e)
+            continue
 
-        if user_input:
-            if len(user_input.split()) > 2:
-                print('Слишком много аргументов! Формат ввода: steps=steps_number seed=seed_number')
-                continue
-            match = re.search(INPUT_RE, user_input)
-            if match:
-                users_steps = match.group(1)
-                users_seed = match.group(2)
-            else:
-                print('Некоректный ввод! Формат ввода: steps=steps_number seed=seed_number')
-                continue
-        
-        users_steps = int(users_steps) if users_steps else None
-        users_seed = int(users_seed) if users_seed else None
-        
         if users_steps:        
             run_simulation(users_steps, users_seed)
         else:
